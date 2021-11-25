@@ -1275,6 +1275,23 @@
 
     *Jean Boussier*
 
+    Add `ActiveRecord::AsynchronousLoading.execute#`.
+
+    This method schedules and executes the supplied queries asynchronously from a thread pool.
+    At the end of the supplied block, all queries will have resolved.
+
+    ```ruby
+    def index
+      ActiveRecord::AsynchronousLoading.execute do
+        @categories = Category.some_complex_scope
+        @posts = Post.some_complex_scope
+      end
+      # at this point, the two scopes above will have been asynchronously resolved
+    end
+    ```
+
+    *Michael Frederick*
+
 *   Implemented `ActiveRecord::Relation#excluding` method.
 
     This method excludes the specified record (or collection of records) from
